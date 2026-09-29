@@ -24,13 +24,17 @@ const EmployeeForm = ({ initialData, onSuccess, onCancel }: EmployeeFormProps) =
 
   const [formData, setFormData] = useState({
     name: initialData?.name ?? "",
+    lastName: initialData?.lastName ?? "",
+    phone: initialData?.phone ?? "",
     email: initialData?.email ?? "",
     department: initialData?.department ?? "",
     role: initialData?.role ?? "",
     divisi: initialData?.divisi?.divisi ?? "",
     salary: initialData?.salary ?? 0,
-    createdAt: initialData?.divisi?.CreatedAt ?? "",
+    createdAt: initialData?.CreatedAt ?? "",
     divisiId: initialData?.divisiId ?? initialData?.divisi?.id ?? "",
+    status: initialData?.status ?? "",
+    bio: initialData?.bio ?? "",
   });
 
   console.log(formData);
@@ -78,7 +82,7 @@ const EmployeeForm = ({ initialData, onSuccess, onCancel }: EmployeeFormProps) =
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 text-sm text-slate-700">
           <div>
             <label htmlFor="" className="block mb-2">
-              Name
+              Firts Name
             </label>
             <input
               className="border border-slate-100 bg-slate-50 p-2 rounded-lg w-full"
@@ -95,16 +99,16 @@ const EmployeeForm = ({ initialData, onSuccess, onCancel }: EmployeeFormProps) =
           </div>
           <div>
             <label htmlFor="" className="block mb-2">
-              Email
+              Last Name
             </label>
             <input
               className="border border-slate-100 bg-slate-50 p-2 rounded-lg w-full"
-              type="email"
-              value={formData.email}
+              type="text"
+              value={formData.lastName}
               onChange={(e) =>
                 setFormData({
                   ...formData,
-                  email: e.target.value,
+                  lastName: e.target.value,
                 })
               }
               required
@@ -112,7 +116,67 @@ const EmployeeForm = ({ initialData, onSuccess, onCancel }: EmployeeFormProps) =
           </div>
           <div>
             <label htmlFor="" className="block mb-2">
-              Role
+              Phone
+            </label>
+            <input
+              className="border border-slate-100 bg-slate-50 p-2 rounded-lg w-full"
+              type="text"
+              value={formData.phone}
+              onChange={(e) =>
+                setFormData({
+                  ...formData,
+                  phone: e.target.value,
+                })
+              }
+              required
+            />
+          </div>
+          <div>
+            <label htmlFor="" className="block mb-2">
+              Join Date
+            </label>
+            <input
+              disabled
+              className="border border-slate-100 bg-slate-50 p-2 rounded-lg w-full"
+              type="text"
+              value={formatDate(formData.createdAt)}
+              onChange={(e) =>
+                setFormData({
+                  ...formData,
+                  createdAt: e.target.value,
+                })
+              }
+            />
+          </div>
+          <div>
+            <label htmlFor="" className="block mb-2">
+              Bio
+            </label>
+            <input
+              className="border border-slate-100 bg-slate-50 p-2 rounded-lg w-full"
+              type="text"
+              value={formData.bio}
+              onChange={(e) =>
+                setFormData({
+                  ...formData,
+                  bio: e.target.value,
+                })
+              }
+              required
+            />
+          </div>
+        </div>
+      </div>
+
+      {/* Employment Details */}
+      <div className="border border-slate-100 rounded-xl p-5 sm:p-6">
+        <h3 className="font-medium mb-6 pb-4 border-b border-slate-100">
+          Employment Details
+        </h3>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 text-sm text-slate-700">
+          <div>
+            <label htmlFor="" className="block mb-2">
+              Position
             </label>
             <input
               className="border border-slate-100 bg-slate-50 p-2 rounded-lg w-full"
@@ -128,7 +192,7 @@ const EmployeeForm = ({ initialData, onSuccess, onCancel }: EmployeeFormProps) =
           </div>
           <div>
             <label htmlFor="divisiID" className="block mb-2">
-              Divisi
+              Department
             </label>
 
             <select
@@ -184,21 +248,41 @@ const EmployeeForm = ({ initialData, onSuccess, onCancel }: EmployeeFormProps) =
             />
           </div>
           <div>
-            <label htmlFor="" className="block mb-2">
-              Join Date
+            <label htmlFor="status" className="block mb-2">
+              Status
             </label>
-            <input
-              disabled
-              className="border border-slate-100 bg-slate-50 p-2 rounded-lg w-full"
-              type="text"
-              value={formatDate(formData.createdAt)}
+
+            <select
+              id="status"
+              name="status"
+              value={formData.status}
               onChange={(e) =>
                 setFormData({
                   ...formData,
-                  createdAt: e.target.value,
+                  status: e.target.value,
                 })
               }
-            />
+              disabled={loadingDivisi}
+              required
+              className="
+      border border-slate-100
+      bg-slate-50
+      p-2
+      rounded-lg
+      w-full
+      outline-none
+      focus:border-indigo-500
+      focus:ring-2
+      focus:ring-indigo-500/10
+      disabled:opacity-50
+    "
+            >
+              <option value="" disabled>
+                {loadingDivisi ? "Loading Divisions..." : "Select Status"}
+              </option>
+              <option value="Active">Active</option>
+              <option value="Inactive">Inactive</option>
+            </select>
           </div>
         </div>
       </div>
@@ -209,6 +293,23 @@ const EmployeeForm = ({ initialData, onSuccess, onCancel }: EmployeeFormProps) =
           Accout Setup
         </h3>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 text-sm text-slate-700">
+          <div>
+            <label htmlFor="" className="block mb-2">
+              Email
+            </label>
+            <input
+              className="border border-slate-100 bg-slate-50 p-2 rounded-lg w-full"
+              type="email"
+              value={formData.email}
+              onChange={(e) =>
+                setFormData({
+                  ...formData,
+                  email: e.target.value,
+                })
+              }
+              required
+            />
+          </div>
           <div>
             <label htmlFor="role" className="block mb-2">
               System Role

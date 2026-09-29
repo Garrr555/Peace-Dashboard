@@ -43,14 +43,18 @@ export interface UserType {
   UpdatedAt: string;
   DeletedAt: null | string;
   name: string;
+  lastName: string;
   email: string;
   password: string;
+  phone: string;
   role: string;
   Events: EventType;
   image: string;
   platform: string;
   salary: number;
   department: string;
+  status: string;
+  bio: string;
 
   divisiId: number | null;
   divisi: DivisiType | null;
