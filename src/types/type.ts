@@ -20,6 +20,7 @@ export interface EventType {
   type: string | null;
   count: number | null;
   price: number | null;
+  phone: number | null;
 }
 
 export interface BookingType {
@@ -45,7 +46,7 @@ export interface UserType {
   email: string;
   password: string;
   role: string;
-  Events: null;
+  Events: EventType;
   image: string;
   platform: string;
   salary: number;
@@ -89,4 +90,6 @@ export interface TagType {
   DeletedAt: null | string;
 
   name: string;
+
+  divisi: string;
 }

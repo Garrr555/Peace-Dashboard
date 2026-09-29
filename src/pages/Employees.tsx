@@ -8,6 +8,7 @@ import type { UserType } from "../types/type";
 import CustomFetch from "../config/db";
 import EmployeeCard from "../components/EmployeeCard";
 import { toast } from "react-toastify";
+import EmployeeForm from "../components/EmployeeForm";
 
 const Employees = () => {
   const { divisis } = useDivisi();
@@ -56,28 +57,28 @@ const Employees = () => {
     getUsersByDivisi(Number(value));
   };
 
-const handleDeleteUser = async () => {
-  if (!selectedEmployee) return;
+  const handleDeleteUser = async () => {
+    if (!selectedEmployee) return;
 
-  try {
-    await CustomFetch.delete(`/user/${selectedEmployee.ID}`);
+    try {
+      await CustomFetch.delete(`/user/${selectedEmployee.ID}`);
 
-    toast.success("Berhasil Menghapus Employee");
+      toast.success("Berhasil Menghapus Employee");
 
-    setShowDeleteModal(false);
-    setSelectedEmployee(null);
+      setShowDeleteModal(false);
+      setSelectedEmployee(null);
 
-    getUsersByDivisi(Number(selectedDivisi));
-  } catch (error: any) {
-    console.log(error);
+      getUsersByDivisi(Number(selectedDivisi));
+    } catch (error: any) {
+      console.log(error);
 
-    toast.error(
-      error?.response?.data?.error ||
-        error?.response?.data?.message ||
-        "Gagal Menghapus Employee",
-    );
-  }
-};
+      toast.error(
+        error?.response?.data?.error ||
+          error?.response?.data?.message ||
+          "Gagal Menghapus Employee",
+      );
+    }
+  };
 
   useEffect(() => {
     getUsersByDivisi(0);
@@ -93,6 +94,10 @@ const handleDeleteUser = async () => {
         </div>
 
         <button
+          onClick={() => {
+            setSelectedEmployee(null);
+            setShowCreateModal(true);
+          }}
           type="button"
           className="w-1/8 py-3 bg-linear-to-r from-indigo-600 to-indigo-500 text-white rounded-md text-sm font-semibold hover:from-indigo-700 hover:to-indigo-600 disabled:opacity-50 transition-all duration-200 shadow-lg shadow-indigo-500/25 active:scale-[0.98] flex items-center justify-center gap-2"
         >
@@ -234,7 +239,10 @@ const handleDeleteUser = async () => {
                 setSelectedEmployee(employee);
                 setShowDeleteModal(true);
               }}
-              onEdit={() => setShowCreateModal(!showCreateModal)}
+              onEdit={(employee) => {
+                setSelectedEmployee(employee);
+                setShowCreateModal(true);
+              }}
             />
           ))}
         </div>
@@ -254,10 +262,13 @@ const handleDeleteUser = async () => {
             <div className="flex items-center justify-between p-6 pb-0">
               <div>
                 <h2 className="text-lg font-semibold text-slate-900">
-                  Add New Employee
+                  {selectedEmployee ? "Edit Employee" : "Add New Employee"}
                 </h2>
+
                 <p className="text-sm text-slate-500 mt-0.5">
-                  Create a user account and employee profile
+                  {selectedEmployee
+                    ? "Update employee information and account details"
+                    : "Create a user account and employee profile"}
                 </p>
               </div>
               <button
@@ -267,7 +278,20 @@ const handleDeleteUser = async () => {
                 <X className="w-5 h-5" />
               </button>
             </div>
-            <div className="p-6">form</div>
+            <div className="p-6">
+              <EmployeeForm
+                initialData={selectedEmployee}
+                onSuccess={() => {
+                  setShowCreateModal(false);
+                  setSelectedEmployee(null);
+                  getUsersByDivisi(Number(selectedDivisi));
+                }}
+                onCancel={() => {
+                  setShowCreateModal(false);
+                  setSelectedEmployee(null);
+                }}
+              />
+            </div>
           </div>
         </div>
       )}
