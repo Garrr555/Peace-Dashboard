@@ -14,7 +14,7 @@ const Employees = () => {
   const { divisis } = useDivisi();
 
   const [employees, setEmployees] = useState<UserType[]>([]);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [selectedEmployee, setSelectedEmployee] = useState<UserType | null>(
     null,
   );
@@ -31,16 +31,16 @@ const Employees = () => {
         const response = await CustomFetch.get(`/users`);
 
         setEmployees(response.data.users);
+        setLoading(false)
       } else {
         const response = await CustomFetch.get(`/divisis/${id}/users`);
 
         setEmployees(response.data.users);
+        setLoading(false)
       }
     } catch (error) {
       console.error("Failed to load employees:", error);
       setEmployees([]);
-    } finally {
-      setLoading(false);
     }
   };
 
@@ -83,6 +83,8 @@ const Employees = () => {
   useEffect(() => {
     getUsersByDivisi(0);
   }, []);
+
+  if(loading) return <Loading/>
 
   return (
     <div className="animate-fade-in">

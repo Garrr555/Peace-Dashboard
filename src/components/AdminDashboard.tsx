@@ -27,11 +27,11 @@ const AdminDashboard = (data: UserType) => {
           </span>
         </p>
       </div>
-      <div className="grid grid-cols-1 gap-0 sm:grid-cols-2 lg:grid-cols-3">
+      <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
         {cards.map((card, i) => (
           <div
             key={i}
-            className="relative flex items-center justify-between overflow-hidden p-5 sm:p-6 group my-2"
+            className="relative flex items-center justify-between overflow-hidden p-5 sm:p-6 group my-2 bg-slate-50"
           >
             <div>
               <div className="absolute left-0 top-0 bottom-0 w-1 rounded-r-full bg-slate-500/70 group-hover:bg-indigo-500/70" />

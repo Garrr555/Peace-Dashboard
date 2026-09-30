@@ -8,7 +8,6 @@ import useCurrentUser from "../hooks/useCurrentUser";
 const Dashboard = () => {
   const { currentUser } = useCurrentUser();
   const [loading, setLoading] = useState(true);
-  console.log(currentUser);
 
   useEffect(() => {
     setTimeout(() => {

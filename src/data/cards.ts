@@ -1,6 +1,8 @@
 import {
   Building2Icon,
   CalendarIcon,
+  CircleAlert,
+  Clock,
   DollarSignIcon,
   FileIcon,
   FileTextIcon,
@@ -71,7 +73,11 @@ export const CardsEmployee = (data: UserType): CardsEmployeeType[] => [
   },
 ];
 
-export const CardsAdmin = (data: UserType, users: number, department: number): CardsAdminType[] => [
+export const CardsAdmin = (
+  data: UserType,
+  users: number,
+  department: number,
+): CardsAdminType[] => [
   {
     // saya ingin menambahkan users.length di value ini
     value: users,
@@ -96,5 +102,29 @@ export const CardsAdmin = (data: UserType, users: number, department: number): C
     label: "Pending Leaves",
     description: "Awaiting Approval",
     icon: FileTextIcon,
+  },
+];
+
+export const CardsAttendance = (data: UserType): CardsEmployeeType[] => [
+  {
+    value: data.id,
+    title: "Days Present",
+    subtitle:
+      "Manage Employee, Departments, Payroll, and system configurations",
+    icon: CalendarIcon,
+  },
+  {
+    value: data.id,
+    title: "Late Arrivals",
+    subtitle:
+      "Manage Employee, Departments, Payroll, and system configurations",
+    icon: CircleAlert,
+  },
+  {
+    value: data.phone,
+    title: "Avg. Work Hrs",
+    subtitle:
+      "Manage Employee, Departments, Payroll, and system configurations",
+    icon: Clock,
   },
 ];
