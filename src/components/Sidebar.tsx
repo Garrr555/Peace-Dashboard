@@ -38,7 +38,7 @@ const Sidebar = () => {
             <UserIcon className="text-white size-7" />
             <div>
               <p className="font-semibold text-[13px] text-white tracking-wide">
-                Employee MS
+                Peace Dashboard
               </p>
               <p className="text-[11px] text-slate-500 font-medium">
                 Management System
@@ -69,7 +69,7 @@ const Sidebar = () => {
                 {user?.name}
               </p>
               <p className="text-[11px] text-slate-500 truncate">
-                {user?.role === "admin" ? "Administrator" : "Employee"}
+                {user?.role === "admin" ? "Admin" : "Member"}
               </p>
             </div>
           </div>

@@ -2,19 +2,21 @@
 /* eslint-disable react-hooks/set-state-in-effect */
 import { Plus, Search, Trash2, X } from "lucide-react";
 import { useEffect, useState } from "react";
-import useDivisi from "../hooks/useDivisi";
 import Loading from "../components/Loading";
-import type { UserType } from "../types/type";
+import type { TagType, UserType } from "../types/type";
 import CustomFetch from "../config/db";
 import EmployeeCard from "../components/EmployeeCard";
 import { toast } from "react-toastify";
 import EmployeeForm from "../components/EmployeeForm";
 import DepartmentForm from "../components/DepartmentForm";
+import useTags from "../hooks/useTags";
+import useEvents from "../hooks/useEvents";
 
-const Employees = () => {
-  const { divisis } = useDivisi();
+const Tags = () => {
+  const { tags } = useTags();
+  const { events } = useEvents();
 
-  const [employees, setEmployees] = useState<UserType[]>([]);
+  const [employees, setEmployees] = useState<TagType[]>([]);
   const [loading, setLoading] = useState(true);
   const [selectedEmployee, setSelectedEmployee] = useState<UserType | null>(
     null,
@@ -24,23 +26,23 @@ const Employees = () => {
     useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [selectedDivisi, setSelectedDivisi] = useState("");
-  console.log(employees);
+  console.log("Employee: ", employees);
 
   const getUsersByDivisi = async (id: number) => {
     try {
       setLoading(true);
-
       if (id == 0) {
-        const response = await CustomFetch.get(`/users`);
+        const response = await CustomFetch.get(`/events`);
 
-        setEmployees(response.data.users);
+        setEmployees(response.data.event);
         setLoading(false);
       } else {
-        const response = await CustomFetch.get(`/divisis/${id}/users`);
+        const response = await CustomFetch.get(`/events/tag/${id}`);
 
-        setEmployees(response.data.users);
-        setLoading(false);
+        setEmployees(response.data.events);
       }
+
+      setLoading(false);
     } catch (error) {
       console.error("Failed to load employees:", error);
       setEmployees([]);
@@ -87,7 +89,7 @@ const Employees = () => {
     getUsersByDivisi(0);
   }, []);
 
-  if (loading) return <Loading />;
+  //   if (loading) return <Loading />;
 
   return (
     <div className="animate-fade-in">
@@ -202,11 +204,10 @@ const Employees = () => {
               focus:shadow-md
             "
           >
-            <option value={0}>All Departments</option>
-
-            {divisis.map((divisi) => (
-              <option key={divisi.ID} value={divisi.ID}>
-                {(divisi as typeof divisi & { divisi?: string }).divisi}
+            <option value={0}>All Event</option>
+            {tags.map((tag) => (
+              <option key={tag.ID} value={tag.ID}>
+                {(tag as typeof tag & { tag?: string }).name}
               </option>
             ))}
           </select>
@@ -569,4 +570,4 @@ const Employees = () => {
   );
 };
 
-export default Employees;
+export default Tags;

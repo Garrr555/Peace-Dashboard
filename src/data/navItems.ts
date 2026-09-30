@@ -1,12 +1,9 @@
 import type { LucideIcon } from "lucide-react";
 import {
-  Calendar1Icon,
-  DollarSignIcon,
   FileTextIcon,
   LayoutGridIcon,
-  SettingsIcon,
+  Tag,
   UserIcon,
-  UserPlus,
 } from "lucide-react";
 
 export type NavItemsType = {
@@ -17,13 +14,9 @@ export type NavItemsType = {
 
 export const navItems = (role: string): NavItemsType[] => [
   { name: "Dashboard", href: "/dashboard", icon: LayoutGridIcon },
-  role === "admin"
-    ? { name: "Employees", href: "/employees", icon: UserIcon }
-    : { name: "Attendance", href: "/attendance", icon: Calendar1Icon },
-  { name: "Leave", href: "/leave", icon: FileTextIcon },
-  { name: "Payslips", href: "/payslips", icon: DollarSignIcon },
-  { name: "Settings", href: "/settings", icon: SettingsIcon },
   ...(role === "admin"
-    ? [{ name: "Register", href: "/register", icon: UserPlus }]
+    ? [{ name: "User & Department", href: "/employees", icon: UserIcon }]
     : []),
+  { name: "Tags", href: "/tags", icon: Tag },
+  { name: "Data", href: "/datas", icon: FileTextIcon },
 ];

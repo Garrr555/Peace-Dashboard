@@ -4,13 +4,10 @@ import LoginLanding from "./pages/auth/LoginLanding";
 import ProtectedRoute from "./guard/ProtectedRoute";
 import Dashboard from "./pages/Dashboard";
 import Employees from "./pages/Employees";
-import Attendance from "./pages/Attendance";
-import Leave from "./pages/Leave";
 import Payslips from "./pages/Payslips";
-import Settings from "./pages/Settings";
 import Layout from "./pages/Layout";
 import LoginForm from "./components/LoginForm";
-import Register from "./pages/Register";
+import Tags from "./pages/Tags";
 
 function App() {
   return (
@@ -49,11 +46,8 @@ function App() {
           <Route element={<Layout />}>
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/employees" element={<Employees />} />
-            <Route path="/attendance" element={<Attendance />} />
-            <Route path="/leave" element={<Leave />} />
-            <Route path="/payslips" element={<Payslips />} />
-            <Route path="/settings" element={<Settings />} />
-            <Route path="/register" element={<Register />} />
+            <Route path="/tags" element={<Tags />} />
+            <Route path="/datas" element={<Employees />} />
           </Route>
 
           <Route path="/print/payslips/:id" element={<Payslips />} />

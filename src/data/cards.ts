@@ -8,6 +8,7 @@ import {
   FileTextIcon,
   MailIcon,
   ShieldIcon,
+  Tag,
   User2Icon,
   type LucideIcon,
 } from "lucide-react";
@@ -76,30 +77,46 @@ export const CardsEmployee = (data: UserType): CardsEmployeeType[] => [
 export const CardsAdmin = (
   data: UserType,
   users: number,
-  department: number,
+  departments: number,
+  tags: number,
+  events: number,
+  myEvents: number,
+  saveEvents: number,
 ): CardsAdminType[] => [
   {
     // saya ingin menambahkan users.length di value ini
     value: users,
-    label: "Total Employees",
+    label: "Total User",
     description: "Active Workforce",
     icon: User2Icon,
   },
   {
-    value: department,
+    value: departments,
     label: "Departments",
     description: "Organization Units",
     icon: Building2Icon,
   },
   {
-    value: data.id,
-    label: "Today's Attendance",
+    value: tags,
+    label: "Tags",
     description: "Checked in Today",
-    icon: CalendarIcon,
+    icon: Tag,
   },
   {
-    value: data.id,
-    label: "Pending Leaves",
+    value: events,
+    label: "Global Data (No Private)",
+    description: "Awaiting Approval",
+    icon: FileTextIcon,
+  },
+  {
+    value: myEvents,
+    label: "My Data",
+    description: "Awaiting Approval",
+    icon: FileTextIcon,
+  },
+  {
+    value: saveEvents,
+    label: "Saving Data",
     description: "Awaiting Approval",
     icon: FileTextIcon,
   },

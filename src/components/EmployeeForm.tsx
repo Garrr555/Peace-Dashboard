@@ -5,7 +5,6 @@ import CustomFetch from "../config/db";
 import type { UserType } from "../types/type";
 import { toast } from "react-toastify";
 import useFormatDate from "../hooks/useFormatDate";
-import formatRupiah from "../hooks/FormatNumber";
 import useDivisi from "../hooks/useDivisi";
 import { Loader } from "lucide-react";
 
@@ -15,7 +14,11 @@ interface EmployeeFormProps {
   onCancel: () => void;
 }
 
-const EmployeeForm = ({ initialData, onSuccess, onCancel }: EmployeeFormProps) => {
+const EmployeeForm = ({
+  initialData,
+  onSuccess,
+  onCancel,
+}: EmployeeFormProps) => {
   const isEditMode = !!initialData;
   const { formatDate } = useFormatDate();
 
@@ -30,11 +33,12 @@ const EmployeeForm = ({ initialData, onSuccess, onCancel }: EmployeeFormProps) =
     department: initialData?.department ?? "",
     role: initialData?.role ?? "",
     divisi: initialData?.divisi?.divisi ?? "",
-    salary: initialData?.salary ?? 0,
+    salary: Number(initialData?.salary ?? 0),
     createdAt: initialData?.CreatedAt ?? "",
     divisiId: initialData?.divisiId ?? initialData?.divisi?.id ?? "",
     status: initialData?.status ?? "",
     bio: initialData?.bio ?? "",
+    platform: initialData?.platform ?? "Dashboard",
   });
 
   console.log(formData);
@@ -48,11 +52,11 @@ const EmployeeForm = ({ initialData, onSuccess, onCancel }: EmployeeFormProps) =
       if (isEditMode) {
         await CustomFetch.put(`/user/${initialData.ID}`, formData);
 
-        toast.success("Berhasil Mengupdate Employee");
+        toast.success("Berhasil Mengupdate User");
       } else {
         await CustomFetch.post("/auth/register", formData);
 
-        toast.success("Berhasil Menambahkan Employee");
+        toast.success("Berhasil Menambahkan User");
       }
 
       onSuccess();
@@ -62,7 +66,7 @@ const EmployeeForm = ({ initialData, onSuccess, onCancel }: EmployeeFormProps) =
       toast.error(
         error?.response?.data?.error ||
           error?.response?.data?.message ||
-          "Gagal Menyimpan Employee",
+          "Gagal Menyimpan User",
       );
     } finally {
       setLoading(false);
@@ -171,7 +175,7 @@ const EmployeeForm = ({ initialData, onSuccess, onCancel }: EmployeeFormProps) =
       {/* Employment Details */}
       <div className="border border-slate-100 rounded-xl p-5 sm:p-6">
         <h3 className="font-medium mb-6 pb-4 border-b border-slate-100">
-          Employment Details
+          User Details
         </h3>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 text-sm text-slate-700">
           <div>
@@ -232,19 +236,29 @@ const EmployeeForm = ({ initialData, onSuccess, onCancel }: EmployeeFormProps) =
             </select>
           </div>
           <div>
-            <label htmlFor="" className="block mb-2">
+            <label htmlFor="salary" className="block mb-2">
               Salary
             </label>
+
             <input
-              className="border border-slate-100 bg-slate-50 p-2 rounded-lg w-full"
+              id="salary"
               type="text"
-              value={formatRupiah(formData.salary)}
-              onChange={(e) =>
+              inputMode="numeric"
+              placeholder="Masukkan salary"
+              className="border border-slate-100 bg-slate-50 p-2 rounded-lg w-full"
+              value={
+                formData.salary
+                  ? `Rp ${Number(formData.salary).toLocaleString("id-ID")}`
+                  : ""
+              }
+              onChange={(e) => {
+                const value = e.target.value.replace(/\D/g, "");
+
                 setFormData({
                   ...formData,
-                  salary: Number(e.target.value),
-                })
-              }
+                  salary: value === "" ? 0 : Number(value),
+                });
+              }}
             />
           </div>
           <div>
@@ -345,6 +359,23 @@ const EmployeeForm = ({ initialData, onSuccess, onCancel }: EmployeeFormProps) =
               <option value="admin">Admin</option>
               <option value="member">Member</option>
             </select>
+          </div>
+          <div>
+            <label htmlFor="" className="block mb-2">
+              Platform
+            </label>
+            <input
+              className="border border-slate-100 bg-slate-50 p-2 rounded-lg w-full"
+              type="text"
+              value={formData.platform}
+              onChange={(e) =>
+                setFormData({
+                  ...formData,
+                  platform: e.target.value,
+                })
+              }
+              required
+            />
           </div>
         </div>
       </div>

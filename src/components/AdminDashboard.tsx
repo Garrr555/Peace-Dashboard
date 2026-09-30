@@ -1,16 +1,26 @@
-import { Link } from "react-router";
 import { CardsAdmin } from "../data/cards";
 import { useAuthStore } from "../store/auth.store";
 import type { UserType } from "../types/type";
-import { ArrowRightIcon } from "lucide-react";
 import useUsers from "../hooks/useUsers";
 import useDivisi from "../hooks/useDivisi";
+import useTags from "../hooks/useTags";
+import useEvents from "../hooks/useEvents";
 
 const AdminDashboard = (data: UserType) => {
   const { users } = useUsers();
   const { divisis } = useDivisi();
   const { user } = useAuthStore();
-  const cards = CardsAdmin(data, users.length, divisis.length);
+  const { tags } = useTags();
+  const { events, myEvent, saveEvents } = useEvents("10000000", "1", "");
+  const cards = CardsAdmin(
+    data,
+    users.length,
+    divisis.length,
+    tags.length,
+    events.length,
+    myEvent.length,
+    saveEvents.length,
+  );
 
   return (
     <div className="animate-fade-in">
@@ -46,21 +56,6 @@ const AdminDashboard = (data: UserType) => {
             <card.icon className="size-10 rounded-lg bg-slate-100 p-2.5 text-slate-600 transition-colors duration-200 group-hover:bg-indigo-50 group-hover:text-indigo-600" />
           </div>
         ))}
-      </div>
-      <div className="flex flex-col gap-3 sm:flex-row">
-        <Link
-          to={"/attendance"}
-          className=" text-center inline-flex items-center justify-center gap-2 py-3 px-5 bg-linear-to-r from-indigo-600 to-indigo-500 text-white rounded-md text-sm font-semibold hover:from-indigo-700 hover:to-indigo-600 disabled:opacity-50 transition-all duration-200 shadow-lg shadow-indigo-500/25"
-        >
-          Mark Attendance
-          <ArrowRightIcon className="w-4 h-4" />
-        </Link>
-        <Link
-          to={"/leave"}
-          className="text-center bg-slate-50 border border-slate-200 rounded-lg py-3 px-5 transition-all duration-300 hover:bg-indigo-50 hover:border-indigo-400 text-sm"
-        >
-          Apply for Leave
-        </Link>
       </div>
     </div>
   );
