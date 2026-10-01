@@ -1,25 +1,23 @@
 import { CardsAdmin } from "../data/cards";
 import { useAuthStore } from "../store/auth.store";
-import type { UserType } from "../types/type";
 import useUsers from "../hooks/useUsers";
 import useDivisi from "../hooks/useDivisi";
 import useTags from "../hooks/useTags";
 import useEvents from "../hooks/useEvents";
 
-const AdminDashboard = (data: UserType) => {
-  const { users } = useUsers();
-  const { divisis } = useDivisi();
+const AdminDashboard = () => {
+  const { userLength } = useUsers();
+  const { divisiLength } = useDivisi();
   const { user } = useAuthStore();
-  const { tags } = useTags();
-  const { events, myEvent, saveEvents } = useEvents("10000000", "1", "");
+  const { tagsLength } = useTags();
+  const { eventsLength, myEventLength, saveEventsLength } = useEvents("10000000", "1", "");
   const cards = CardsAdmin(
-    data,
-    users.length,
-    divisis.length,
-    tags.length,
-    events.length,
-    myEvent.length,
-    saveEvents.length,
+    userLength,
+    divisiLength,
+    tagsLength,
+    eventsLength,
+    myEventLength,
+    saveEventsLength,
   );
 
   return (

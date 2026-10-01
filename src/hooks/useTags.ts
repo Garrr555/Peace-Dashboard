@@ -6,6 +6,7 @@ import type { TagType } from "../types/type";
 
 const useTags = () => {
   const [tags, setTags] = useState<TagType[]>([]);
+  const [tagsLength, setTagsLength] = useState(0);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
@@ -17,6 +18,7 @@ const useTags = () => {
       const response = await CustomFetch.get("/tags");
 
       setTags(response.data.tags);
+      setTagsLength(response.data.tags.length);
     } catch (error: any) {
       console.error(error);
 
@@ -32,6 +34,7 @@ const useTags = () => {
 
   return {
     tags,
+    tagsLength,
     loading,
     error,
     getTags,

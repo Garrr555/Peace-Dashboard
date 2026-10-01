@@ -23,7 +23,7 @@ const Dashboard = () => {
       <p className="text-center text-slate-500">Failed to load dashboard</p>
     );
   if (currentUser?.role === "admin") {
-    return <AdminDashboard {...currentUser} />;
+    return <AdminDashboard />;
   } else {
     return <EmployeeDashboard {...currentUser} />;
   }

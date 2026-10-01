@@ -46,8 +46,7 @@ function App() {
           <Route element={<Layout />}>
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/employees" element={<Employees />} />
-            <Route path="/tags" element={<Tags />} />
-            <Route path="/datas" element={<Employees />} />
+            <Route path="/datas" element={<Tags />} />
           </Route>
 
           <Route path="/print/payslips/:id" element={<Payslips />} />

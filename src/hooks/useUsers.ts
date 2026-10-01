@@ -6,6 +6,7 @@ import type { UserType } from "../types/type";
 
 const useUsers = () => {
   const [users, setUsers] = useState<UserType[]>([]);
+  const [userLength, setLength] = useState(0);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
@@ -17,6 +18,7 @@ const useUsers = () => {
       const response = await CustomFetch.get("/users");
 
       setUsers(response.data.users);
+      setLength(response.data.users.length);
     } catch (error: any) {
       console.error(error);
 
@@ -32,6 +34,7 @@ const useUsers = () => {
 
   return {
     users,
+    userLength,
     loading,
     error,
     getUsers,

@@ -6,6 +6,7 @@ import type { TagType } from "../types/type";
 
 const useDivisi = () => {
   const [divisis, setDivisi] = useState<TagType[]>([]);
+  const [divisiLength, setDivisiLength] = useState(0);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
@@ -17,6 +18,7 @@ const useDivisi = () => {
       const response = await CustomFetch.get("/divisis");
 
       setDivisi(response.data.divisis);
+      setDivisiLength(response.data.divisis.length);
     } catch (error: any) {
       console.error(error);
 
@@ -32,6 +34,7 @@ const useDivisi = () => {
 
   return {
     divisis,
+    divisiLength,
     loading,
     error,
     getDivisis,

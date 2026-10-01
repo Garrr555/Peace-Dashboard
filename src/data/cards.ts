@@ -75,7 +75,6 @@ export const CardsEmployee = (data: UserType): CardsEmployeeType[] => [
 ];
 
 export const CardsAdmin = (
-  data: UserType,
   users: number,
   departments: number,
   tags: number,
