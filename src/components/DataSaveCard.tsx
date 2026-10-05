@@ -29,7 +29,7 @@ const DataSaveCard = ({
       <div className="relative h-70 bg-linear-to-br from-slate-50 via-slate-50 to-indigo-50/40 flex items-center justify-center">
         {/* Department */}
         <div className="absolute top-4 left-4 z-10 rounded-lg bg-white px-3 py-1.5 text-sm font-semibold text-slate-600 shadow-sm">
-          {employee?.event.name || "Employee"}
+          {employee?.event?.tag?.name || "No Tag"}
         </div>
         {/* Avatar */}{" "}
         {employee?.event.image ? (

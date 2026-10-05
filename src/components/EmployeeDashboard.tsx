@@ -1,7 +1,5 @@
-import { Link } from "react-router";
 import { useAuthStore } from "../store/auth.store";
 import type { UserType } from "../types/type";
-import { ArrowRightIcon } from "lucide-react";
 import { CardsEmployee } from "../data/cards";
 
 const EmployeeDashboard = (data: UserType) => {
@@ -31,7 +29,7 @@ const EmployeeDashboard = (data: UserType) => {
 
               <p className="text-sm font-medium text-slate-700">{card.title}</p>
 
-              <p className="mt-1 text-2xl font-bold text-slate-900">
+              <p className="mt-1 text-xl font-bold text-slate-900 overflow-hidden">
                 {card.value}
               </p>
             </div>
@@ -39,21 +37,6 @@ const EmployeeDashboard = (data: UserType) => {
             <card.icon className="size-10 rounded-lg bg-slate-100 p-2.5 text-slate-600 transition-colors duration-200 group-hover:bg-indigo-50 group-hover:text-indigo-600" />
           </div>
         ))}
-      </div>
-      <div className="flex flex-col gap-3 sm:flex-row">
-        <Link
-          to={"/attendance"}
-          className=" text-center inline-flex items-center justify-center gap-2 py-3 px-5 bg-linear-to-r from-indigo-600 to-indigo-500 text-white rounded-md text-sm font-semibold hover:from-indigo-700 hover:to-indigo-600 disabled:opacity-50 transition-all duration-200 shadow-lg shadow-indigo-500/25"
-        >
-          Mark Attendance
-          <ArrowRightIcon className="w-4 h-4" />
-        </Link>
-        <Link
-          to={"/leave"}
-          className="text-center bg-slate-50 border border-slate-200 rounded-lg py-3 px-5 transition-all duration-300 hover:bg-indigo-50 hover:border-indigo-400 text-sm"
-        >
-          Apply for Leave
-        </Link>
       </div>
     </div>
   );

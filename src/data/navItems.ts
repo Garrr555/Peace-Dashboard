@@ -1,5 +1,6 @@
 import type { LucideIcon } from "lucide-react";
 import {
+  DatabaseIcon,
   FileTextIcon,
   LayoutGridIcon,
   UserIcon,
@@ -17,4 +18,7 @@ export const navItems = (role: string): NavItemsType[] => [
     ? [{ name: "User & Department", href: "/employees", icon: UserIcon }]
     : []),
   { name: "Data", href: "/datas", icon: FileTextIcon },
+  ...(role === "admin"
+    ? [{ name: "Database", href: "/db", icon: DatabaseIcon }]
+    : []),
 ];

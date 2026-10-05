@@ -116,6 +116,9 @@ const Tags = () => {
     }
   }, [selectedEvent, selectedDivisi, events, tagEvent, myEvent, saveEvents]);
 
+  console.log(saveEmployees)
+  console.log(employees)
+
   return (
     <div className="animate-fade-in">
       {/* Header */}

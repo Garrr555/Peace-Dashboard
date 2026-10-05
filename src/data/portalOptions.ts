@@ -18,7 +18,7 @@ export const portalOptions: PortalOptionsType[] = [
   },
   {
     to: "/login/employee",
-    title: "Employee Portal",
+    title: "Member Portal",
     description:
       "View your profile, track attendance, request time off, and access payslips",
     icon: UserIcon,

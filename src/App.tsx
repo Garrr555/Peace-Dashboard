@@ -8,6 +8,7 @@ import Payslips from "./pages/Payslips";
 import Layout from "./pages/Layout";
 import LoginForm from "./components/LoginForm";
 import Tags from "./pages/Tags";
+import Db from "./pages/Db";
 
 function App() {
   return (
@@ -47,6 +48,7 @@ function App() {
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/employees" element={<Employees />} />
             <Route path="/datas" element={<Tags />} />
+            <Route path="/db" element={<Db />} />
           </Route>
 
           <Route path="/print/payslips/:id" element={<Payslips />} />
