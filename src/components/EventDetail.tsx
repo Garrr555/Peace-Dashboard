@@ -81,10 +81,6 @@ const EventDetail = ({ initialData, onCancel }: EventDetailProps) => {
       label: "Count",
       value: initialData.count ?? 0,
     },
-    {
-      label: "Private",
-      value: initialData.private ? "Private" : "Public",
-    },
   ];
 
   const downloadBlob = (blob: Blob, filename: string) => {
