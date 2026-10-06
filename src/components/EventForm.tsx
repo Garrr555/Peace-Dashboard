@@ -49,6 +49,8 @@ const EventForm = ({ initialData, onSuccess, onCancel }: EmployeeFormProps) => {
     datetime: formatDateTimeLocal(initialData?.datetime),
     tagId: initialData?.tagId?.toString() ?? "",
     private: initialData?.private ?? false,
+    link: initialData?.link ?? "",
+    liveLink: initialData?.liveLink ?? "",
   });
 
   // Sinkronisasi data ketika initialData berubah
@@ -65,6 +67,8 @@ const EventForm = ({ initialData, onSuccess, onCancel }: EmployeeFormProps) => {
         datetime: "",
         tagId: "",
         private: false,
+        link: "",
+        liveLink: "",
       });
 
       setImagePreview(null);
@@ -84,6 +88,8 @@ const EventForm = ({ initialData, onSuccess, onCancel }: EmployeeFormProps) => {
       datetime: formatDateTimeLocal(initialData.datetime),
       tagId: initialData.tagId?.toString() ?? "",
       private: initialData.private ?? false,
+      link: initialData.link ?? "",
+      liveLink: initialData.liveLink ?? "",
     });
 
     setImagePreview(initialData.image ?? null);
@@ -117,6 +123,8 @@ const EventForm = ({ initialData, onSuccess, onCancel }: EmployeeFormProps) => {
       payload.append("location", String(formData.location));
       payload.append("datetime", new Date(formData.datetime).toISOString());
       payload.append("type", String(formData.type));
+      payload.append("link", String(formData.link));
+      payload.append("liveLink", String(formData.liveLink));
       payload.append("price", String(formData.price));
       payload.append("count", String(formData.count));
       payload.append("phone", String(formData.phone));
@@ -287,6 +295,30 @@ const EventForm = ({ initialData, onSuccess, onCancel }: EmployeeFormProps) => {
               value={formData.count}
               onChange={(e) =>
                 setFormData({ ...formData, count: e.target.value })
+              }
+            />
+          </div>
+
+          <div>
+            <label className="block mb-2">Link</label>
+            <input
+              className="border border-slate-100 bg-slate-50 p-2 rounded-lg w-full"
+              type="text"
+              value={formData.link}
+              onChange={(e) =>
+                setFormData({ ...formData, link: e.target.value })
+              }
+            />
+          </div>
+
+          <div>
+            <label className="block mb-2">Live</label>
+            <input
+              className="border border-slate-100 bg-slate-50 p-2 rounded-lg w-full"
+              type="text"
+              value={formData.liveLink}
+              onChange={(e) =>
+                setFormData({ ...formData, liveLink: e.target.value })
               }
             />
           </div>

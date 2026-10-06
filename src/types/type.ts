@@ -21,6 +21,8 @@ export interface EventType {
   count: number | null;
   price: number | null;
   phone: number | null;
+  link: string | null;
+  liveLink: string | null;
 }
 
 export interface BookingType {

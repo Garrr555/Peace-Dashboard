@@ -81,6 +81,14 @@ const EventDetail = ({ initialData, onCancel }: EventDetailProps) => {
       label: "Count",
       value: initialData.count ?? 0,
     },
+    {
+      label: "Link",
+      value: initialData.link ?? "-",
+    },
+    {
+      label: "Live",
+      value: initialData.liveLink ?? "-",
+    },
   ];
 
   const downloadBlob = (blob: Blob, filename: string) => {

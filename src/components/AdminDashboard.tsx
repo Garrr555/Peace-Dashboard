@@ -4,6 +4,7 @@ import useUsers from "../hooks/useUsers";
 import useDivisi from "../hooks/useDivisi";
 import useTags from "../hooks/useTags";
 import useEvents from "../hooks/useEvents";
+import { Statistik } from "../pages/Db";
 
 const AdminDashboard = () => {
   const { userLength } = useUsers();
@@ -21,7 +22,7 @@ const AdminDashboard = () => {
   );
 
   return (
-    <div className="animate-fade-in">
+    <div className="animate-fade-in flex flex-col gap-5">
       <div className="">
         <h1 className="text-2xl font-semibold tracking-tight text-slate-900">
           Dashboard
@@ -55,6 +56,7 @@ const AdminDashboard = () => {
           </div>
         ))}
       </div>
+      <Statistik/>
     </div>
   );
 };

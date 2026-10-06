@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 import { useEffect, useMemo, useState } from "react";
@@ -210,31 +211,6 @@ const Db = () => {
   }, [tables]);
 
   /* =========================================================
-     TOTAL COLUMNS
-  ========================================================= */
-
-  const totalColumns = useMemo(() => {
-    return tables.reduce(
-      (total, [, table]) => total + Object.keys(table.columns).length,
-      0,
-    );
-  }, [tables]);
-
-  /* =========================================================
-     TOTAL PRIMARY KEYS
-  ========================================================= */
-
-  const totalPrimaryKeys = useMemo(() => {
-    return tables.reduce((total, [, table]) => {
-      const primaryKeys = Object.values(table.columns).filter(
-        (column) => column.primaryKey,
-      );
-
-      return total + primaryKeys.length;
-    }, 0);
-  }, [tables]);
-
-  /* =========================================================
      RELATIONSHIPS
   ========================================================= */
 
@@ -423,58 +399,6 @@ const Db = () => {
   return (
     <div className="flex min-h-screen flex-col gap-6">
       {/* =====================================================
-          HEADER
-      ===================================================== */}
-
-      <div className="rounded-2xl bg-slate-100 p-6">
-        <div className="mb-8">
-          <div className="flex items-center gap-3">
-            <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-linear-to-r from-indigo-600 to-indigo-500 text-white shadow-lg shadow-indigo-500/25">
-              <Database size={24} />
-            </div>
-
-            <div>
-              <h1 className="text-2xl font-bold text-slate-900">Database</h1>
-
-              <p className="text-sm text-slate-500">
-                Database schema and table relationships
-              </p>
-            </div>
-          </div>
-        </div>
-
-        {/* =================================================
-            STATISTICS
-        ================================================= */}
-
-        <div className="grid grid-cols-2 gap-4 lg:grid-cols-4">
-          <StatCard
-            icon={<Table2 size={18} />}
-            label="Tables"
-            value={tables.length}
-          />
-
-          <StatCard
-            icon={<Database size={18} />}
-            label="Columns"
-            value={totalColumns}
-          />
-
-          <StatCard
-            icon={<KeyRound size={18} />}
-            label="Primary Keys"
-            value={totalPrimaryKeys}
-          />
-
-          <StatCard
-            icon={<Link2 size={18} />}
-            label="Relationships"
-            value={relationships.length}
-          />
-        </div>
-      </div>
-
-      {/* =====================================================
           ERD
       ===================================================== */}
 
@@ -541,6 +465,158 @@ const StatCard = ({
       </div>
 
       <p className="text-2xl font-bold text-indigo-500">{value}</p>
+    </div>
+  );
+};
+
+/* =========================================================
+   STATISTIK
+========================================================= */
+
+export const Statistik = () => {
+  const [dbSchema, setDbSchema] = useState<DBSchema>({});
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchDBSchema = async () => {
+      try {
+        const schema = await getDBSchema();
+
+        setDbSchema(schema);
+      } catch (error) {
+        console.error("Gagal mengambil database schema:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchDBSchema();
+  }, []);
+
+  /* =========================================================
+     TABLES
+  ========================================================= */
+
+  const tables = useMemo(() => {
+    return Object.entries(dbSchema).filter(([tableName, table]) => {
+      if (tableName.trim() !== "") {
+        return true;
+      }
+
+      return Object.keys(table.columns).some((column) => column.trim() !== "");
+    });
+  }, [dbSchema]);
+
+  /* =========================================================
+     TOTAL COLUMNS
+  ========================================================= */
+
+  const totalColumns = useMemo(() => {
+    return tables.reduce(
+      (total, [, table]) => total + Object.keys(table.columns).length,
+      0,
+    );
+  }, [tables]);
+
+  /* =========================================================
+     TOTAL PRIMARY KEYS
+  ========================================================= */
+
+  const totalPrimaryKeys = useMemo(() => {
+    return tables.reduce((total, [, table]) => {
+      const primaryKeys = Object.values(table.columns).filter(
+        (column) => column.primaryKey,
+      );
+
+      return total + primaryKeys.length;
+    }, 0);
+  }, [tables]);
+
+  /* =========================================================
+     RELATIONSHIPS
+  ========================================================= */
+
+  const relationships = useMemo(() => {
+    return tables.flatMap(([, table]) =>
+      Object.entries(table.columns).filter(([, column]) =>
+        Boolean(column.foreignKey),
+      ),
+    );
+  }, [tables]);
+
+  /* =========================================================
+     LOADING
+  ========================================================= */
+
+  if (loading) {
+    return (
+      <div className="rounded-2xl bg-slate-100 p-6">
+        <div className="flex items-center justify-center py-10 text-slate-500">
+          <div className="flex items-center gap-3">
+            <Loader2 size={20} className="animate-spin" />
+
+            <span className="text-sm">Memuat statistik database...</span>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  /* =========================================================
+     UI
+  ========================================================= */
+
+  return (
+    <div className="rounded-2xl bg-slate-100 p-6">
+      {/* =====================================================
+          HEADER
+      ===================================================== */}
+
+      <div className="mb-8">
+        <div className="flex items-center gap-3">
+          <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-linear-to-r from-indigo-600 to-indigo-500 text-white shadow-lg shadow-indigo-500/25">
+            <Database size={24} />
+          </div>
+
+          <div>
+            <h1 className="text-2xl font-bold text-slate-900">Database</h1>
+
+            <p className="text-sm text-slate-500">
+              Database schema and table relationships
+            </p>
+          </div>
+        </div>
+      </div>
+
+      {/* =====================================================
+          STATISTICS
+      ===================================================== */}
+
+      <div className="grid grid-cols-2 gap-4 lg:grid-cols-4">
+        <StatCard
+          icon={<Table2 size={18} />}
+          label="Tables"
+          value={tables.length}
+        />
+
+        <StatCard
+          icon={<Database size={18} />}
+          label="Columns"
+          value={totalColumns}
+        />
+
+        <StatCard
+          icon={<KeyRound size={18} />}
+          label="Primary Keys"
+          value={totalPrimaryKeys}
+        />
+
+        <StatCard
+          icon={<Link2 size={18} />}
+          label="Relationships"
+          value={relationships.length}
+        />
+      </div>
     </div>
   );
 };
