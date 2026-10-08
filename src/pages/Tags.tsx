@@ -6,7 +6,6 @@ import Loading from "../components/Loading";
 import type { BookingType, EventType } from "../types/type";
 import CustomFetch from "../config/db";
 import { toast } from "react-toastify";
-import DepartmentForm from "../components/DepartmentForm";
 import useTags from "../hooks/useTags";
 import DataCard from "../components/DataCard";
 import EventForm from "../components/EventForm";
@@ -14,6 +13,7 @@ import useEvents from "../hooks/useEvents";
 import { useAuthStore } from "../store/auth.store";
 import EventDetail from "../components/EventDetail";
 import DataSaveCard from "../components/DataSaveCard";
+import TagsForm from "../components/TagForm";
 
 const Tags = () => {
   const [selectedDivisi, setSelectedDivisi] = useState("0");
@@ -443,7 +443,7 @@ const Tags = () => {
             </div>
 
             <div className="p-6">
-              <DepartmentForm
+              <TagsForm
                 onSuccess={() => {
                   setShowCreateDepartmentModal(false);
                 }}
