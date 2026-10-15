@@ -30,6 +30,7 @@ const EmployeeForm = ({
     lastName: initialData?.lastName ?? "",
     phone: initialData?.phone ?? "",
     email: initialData?.email ?? "",
+    password: initialData?.password ?? "",
     department: initialData?.department ?? "",
     role: initialData?.role ?? "",
     divisi: initialData?.divisi?.divisi ?? "",
@@ -322,6 +323,22 @@ const EmployeeForm = ({
                 })
               }
               required
+            />
+          </div>
+          <div>
+            <label htmlFor="" className="block mb-2">
+              Password
+            </label>
+            <input
+              className="border border-slate-100 bg-slate-50 p-2 rounded-lg w-full"
+              type="text"
+              value={formData.password}
+              onChange={(e) =>
+                setFormData({
+                  ...formData,
+                  password: e.target.value,
+                })
+              }
             />
           </div>
           <div>
